@@ -38,6 +38,10 @@ public static class RpgCollisionDetailsAccessor
     {
         return CollisionPosition(collision_detailes).SaveCollisionPosition;
     }
+    public static Vector3 SaveCollisionPosition(RpgCollisionDetails collision_detailes,Vector3 set_pos)
+    {
+        return CollisionPosition(collision_detailes).SaveCollisionPosition = set_pos;
+    }
     public static Vector3 OldToNowVector(RpgCollisionDetails collision_detailes)
     {
         return CollisionPosition(collision_detailes).OldToNowVector;
@@ -45,6 +49,10 @@ public static class RpgCollisionDetailsAccessor
     public static Vector3 CalculationPosition(RpgCollisionDetails collision_detailes)
     {
         return CollisionPosition(collision_detailes).CalculationPosition;
+    }
+    public static Vector3 CalculationPosition(RpgCollisionDetails collision_detailes, Vector3 set_pos)
+    {
+        return CollisionPosition(collision_detailes).CalculationPosition = set_pos;
     }
 
 }

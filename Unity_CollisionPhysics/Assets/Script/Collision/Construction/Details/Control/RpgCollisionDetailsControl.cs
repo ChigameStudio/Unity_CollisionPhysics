@@ -13,7 +13,10 @@ public class RpgCollisionDetailsControl
     /// </summary>
     [SerializeField]
     private List<RpgCollisionDetails> list_rpg_collision_details_ = new List<RpgCollisionDetails>();
-
+    public List<RpgCollisionDetails> ListRpgCollisionDetaile
+    {
+        get { return list_rpg_collision_details_; }
+    }
     /// <summary>
     /// 初期化
     /// </summary>
@@ -31,6 +34,18 @@ public class RpgCollisionDetailsControl
         foreach(var details in list_rpg_collision_details_)
         {
             details.Update(collision_construction);
+        }
+    }
+
+    /// <summary>
+    /// 更新処理(当たり判定)
+    /// </summary>
+    /// <param name="collision_construction"></param>
+    public void UpdateCollision(BaseCollisionConstruction collision_construction, List<BaseCollisionConstruction> opponent_collider)
+    {
+        foreach (var details in list_rpg_collision_details_)
+        {
+            details.UpdateCollision(collision_construction,opponent_collider);
         }
     }
 

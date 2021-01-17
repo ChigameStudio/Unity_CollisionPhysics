@@ -15,6 +15,7 @@ public class RpgCollisionPosition
     private Vector3 old_collision_position_ = Vector3.zero;
     public Vector3 SaveCollisionPosition
     {
+        set { now_collision_position_ = old_collision_position_ = value; }
         get { return old_collision_position_; }
     }
     /// <summary>
@@ -40,6 +41,7 @@ public class RpgCollisionPosition
     private Vector3 calculation_position_ = Vector3.zero;
     public Vector3 CalculationPosition
     {
+        set { calculation_position_ = value; }
         get { return calculation_position_; }
     }
 

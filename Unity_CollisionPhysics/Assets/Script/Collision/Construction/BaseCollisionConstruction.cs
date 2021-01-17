@@ -10,7 +10,10 @@ public class BaseCollisionConstruction
 {
     [SerializeField]
     protected RpgCollisionDetailsControl rpg_collision_details_control_ = new RpgCollisionDetailsControl();
-
+    public RpgCollisionDetailsControl RpgCollisionDetailsControl
+    {
+        get { return rpg_collision_details_control_; }
+    }
     /// <summary>
     /// オブジェクト
     /// </summary>
@@ -30,6 +33,13 @@ public class BaseCollisionConstruction
         get { return collision_type_; }
     }
 
+    protected CollisionPushType collision_push_type_;
+    public CollisionPushType CollisionPushType
+    {
+        get { return collision_push_type_; }
+    }
+
+
 
     /// <summary>
     /// コンストラクタ
@@ -38,8 +48,9 @@ public class BaseCollisionConstruction
     {
     }
 
-    public void Init(GameObject game_object,CollisionLayer layer)
+    public void Init(GameObject game_object,CollisionLayer layer,CollisionPushType push)
     {
+        collision_push_type_ = push;
         collision_type_ = layer;
         RpgCollisionConnection.AddCollisionConstruction(this);
         rpg_collision_details_control_ = new RpgCollisionDetailsControl();
@@ -52,5 +63,11 @@ public class BaseCollisionConstruction
         if (rpg_collision_details_control_ == null) return;
         rpg_collision_details_control_.Update(this);
         
+    }
+
+    public void UpdateCollision(List<BaseCollisionConstruction> opponent_collider)
+    {
+        if (rpg_collision_details_control_ == null) return;
+        rpg_collision_details_control_.UpdateCollision(this, opponent_collider);
     }
 }
