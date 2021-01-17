@@ -178,7 +178,7 @@ public static class RpgCollisionCalculation
 
         //強制終了用のカウント
         int cnt = 0;
-        //if (colliders.Length == 0) return;
+
         for (int i = 0; i < opponent_collider.Count; i++)
         {
             cnt++;
@@ -201,13 +201,11 @@ public static class RpgCollisionCalculation
                         Vector3 updatedPostion = (pushBackVector) * (pushBackDistance);
                         this_collison.ThisObject.transform.position +=  new Vector3(updatedPostion.x, updatedPostion.y, updatedPostion.z);
                         RpgCollisionDetailsAccessor.SaveCollisionPosition(collision_details, this_collison.ThisObject.transform.position);
-                    }
-                    if (opponent_col.RpgCollision.GetType() == typeof(MeshCollider))
-                    {
-                        i = 0;
-                        continue;
+                        RpgCollisionDetailsAccessor.CalculationPosition(collision_details, this_collison.ThisObject.transform.position);
                     }
                 }
+               
+                
             }
         }
 

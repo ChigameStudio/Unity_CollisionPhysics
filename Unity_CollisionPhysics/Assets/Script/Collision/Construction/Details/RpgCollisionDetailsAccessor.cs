@@ -54,5 +54,9 @@ public static class RpgCollisionDetailsAccessor
     {
         return CollisionPosition(collision_detailes).CalculationPosition = set_pos;
     }
+    public static Vector3 SaveOldToNowVector(RpgCollisionDetails collision_detailes)
+    {
+        return CollisionPosition(collision_detailes).SaveOldToNowVector;
+    }
 
 }

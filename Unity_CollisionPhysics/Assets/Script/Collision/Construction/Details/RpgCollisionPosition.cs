@@ -35,6 +35,16 @@ public class RpgCollisionPosition
     }
 
     /// <summary>
+    /// 前の座標から現在の座標までのベクトル(保存)
+    /// </summary>
+    [SerializeField]
+    private Vector3 save_old_to_now_position_vector = Vector3.zero;
+    public Vector3 SaveOldToNowVector
+    {
+        get { return save_old_to_now_position_vector; }
+    }
+
+    /// <summary>
     /// 計算用座標
     /// </summary>
     [SerializeField]
@@ -61,6 +71,7 @@ public class RpgCollisionPosition
     /// <param name="now_position"></param>
     public void Update(Vector3 now_position)
     {
+        save_old_to_now_position_vector = (old_collision_position_ - now_collision_position_);
         old_collision_position_ = now_collision_position_;
         now_collision_position_ = now_position;
 
