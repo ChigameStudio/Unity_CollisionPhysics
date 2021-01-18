@@ -53,5 +53,6 @@ public class InputMove : MonoBehaviour
             move.x = 1.0f;
         }
         transform.position += move * speed;
+       
     }
 }

@@ -166,6 +166,23 @@ public static class RpgCollisionCalculation
     }
 
     /// <summary>
+    /// バトルエリアの計算
+    /// </summary>
+    /// <param name="game_object"></param>
+    /// <param name="area_locate"></param>
+    /// <param name="area_rang"></param>
+    public static Vector3 BattlAreaCollisionCorrection(GameObject game_object,Vector3 area_locate,float area_range)
+    {
+        Vector3 object_to_area_vector = (game_object.transform.position - area_locate);
+        float length = object_to_area_vector.magnitude;
+        if (length <= area_range) return game_object.transform.position;
+
+        return area_locate + object_to_area_vector.normalized * area_range;
+
+
+    }
+
+    /// <summary>
     /// 当たり判定の計算
     /// </summary>
     /// <param name="this_collison"></param>
