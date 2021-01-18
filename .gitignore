@@ -54,3 +54,6 @@ Thumbs.db
 
 #python bytecode cache, for some plugins.
 *.pyc
+
+# keep the *.asset files from Library
+!/[Ll]ibrary/*.asset

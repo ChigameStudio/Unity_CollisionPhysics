@@ -188,7 +188,7 @@ public static class RpgCollisionCalculation
     /// <param name="this_collison"></param>
     /// <param name="collision_details"></param>
     /// <param name="collider"></param>
-    public static void CollisionCorrection(BaseCollisionConstruction this_collison, RpgCollisionDetails collision_details, List<BaseCollisionConstruction> opponent_collider,Collider[] colliders)
+    public static void CollisionCorrection(BaseCollisionConstruction this_collison, RpgCollisionDetailsControl this_collision_control, RpgCollisionDetails collision_details, List<BaseCollisionConstruction> opponent_collider,Collider[] colliders)
     {
         if (this_collison == null || collision_details == null) return;
         if (opponent_collider.Count == 0) return;
@@ -203,11 +203,13 @@ public static class RpgCollisionCalculation
 
             Vector3 pushBackVector = Vector3.zero;
             float pushBackDistance = 0.0f;
+            if (this_collision_control == opponent_collider[i].RpgCollisionDetailsControl) continue;
             List<RpgCollisionDetails> detaile =  opponent_collider[i].RpgCollisionDetailsControl.ListRpgCollisionDetaile;
             foreach (var opponent_col in detaile)
             {
                 if (opponent_col == collision_details) continue;
-
+                string name = opponent_col.RpgCollision.gameObject.name;
+                string name2 = collision_details.RpgCollision.gameObject.name;
                 ///めり込んでいた場合
                 if (ComputePenetration(this_collison.CollisionPushType, collision_details.RpgCollision, RpgCollisionDetailsAccessor.CalculationPosition(collision_details)
                                        , opponent_col.RpgCollision, RpgCollisionDetailsAccessor.SaveCollisionPosition(opponent_col)
@@ -219,6 +221,8 @@ public static class RpgCollisionCalculation
                         this_collison.ThisObject.transform.position +=  new Vector3(updatedPostion.x, updatedPostion.y, updatedPostion.z);
                         RpgCollisionDetailsAccessor.SaveCollisionPosition(collision_details, this_collison.ThisObject.transform.position);
                         RpgCollisionDetailsAccessor.CalculationPosition(collision_details, this_collison.ThisObject.transform.position);
+                        this_collision_control.CollisionHitEnter(opponent_col.RpgCollision, opponent_col);
+                        opponent_collider[i].RpgCollisionDetailsControl.CollisionHitEnter(collision_details.RpgCollision, collision_details);
                     }
                 }
                

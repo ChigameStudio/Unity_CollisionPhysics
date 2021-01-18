@@ -8,6 +8,9 @@ using UnityEngine;
 [System.Serializable]
 public class BaseCollisionConstruction
 {
+    /// <summary>
+    /// コリジョン管理
+    /// </summary>
     [SerializeField]
     protected RpgCollisionDetailsControl rpg_collision_details_control_ = new RpgCollisionDetailsControl();
     public RpgCollisionDetailsControl RpgCollisionDetailsControl
@@ -55,14 +58,17 @@ public class BaseCollisionConstruction
         RpgCollisionConnection.AddCollisionConstruction(this);
         rpg_collision_details_control_ = new RpgCollisionDetailsControl();
         this_object_ = game_object;
+        rpg_collision_details_control_.Init(this_object_);
         rpg_collision_details_control_.AutoAddCollisionDetails(this);
     }
 
     public void Update()
     {
         if (rpg_collision_details_control_ == null) return;
+        rpg_collision_details_control_.RemoveAllCollisionHit();
         rpg_collision_details_control_.Update(this);
-        
+
+
     }
 
     public void UpdateCollision(List<BaseCollisionConstruction> opponent_collider)

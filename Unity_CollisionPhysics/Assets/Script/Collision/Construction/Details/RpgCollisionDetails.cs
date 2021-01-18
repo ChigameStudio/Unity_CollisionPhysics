@@ -18,16 +18,16 @@ public class RpgCollisionDetails
         get { return rpg_collision_; }
     }
 
-
     /// <summary>
-    /// ヒットフラグ
+    /// オブジェクト
     /// </summary>
     [SerializeField]
-    private RpgCollisionHitFlag hit_flag_collision_ = new RpgCollisionHitFlag();
-    public RpgCollisionHitFlag HitFlagCollision
+    protected GameObject this_object_;
+    public GameObject ThisObject
     {
-        get { return hit_flag_collision_; }
+        get { return this_object_; }
     }
+
 
     /// <summary>
     /// コリジョン座標
@@ -44,13 +44,13 @@ public class RpgCollisionDetails
     /// </summary>
     /// <param name="collision"></param>
     /// <param name="value_collider"></param>
-    public void Init(BaseCollisionConstruction collision,Collider value_collider)
+    public void Init(BaseCollisionConstruction collision,Collider value_collider,GameObject value_object)
     {
         if (collision == null) return;
-        if (hit_flag_collision_ == null) hit_flag_collision_ = new RpgCollisionHitFlag();
         if (position_collision_ == null) position_collision_ = new RpgCollisionPosition();
         rpg_collision_ = value_collider;
         position_collision_.Update(collision.ThisObject.transform.position);
+        this_object_ = value_object;
     }
 
     /// <summary>
@@ -80,12 +80,12 @@ public class RpgCollisionDetails
     /// 更新処理(当たり判定)
     /// </summary>
     /// <param name="collision"></param>
-    public void UpdateCollision(BaseCollisionConstruction collision, List<BaseCollisionConstruction> opponent_collider)
+    public void UpdateCollision(BaseCollisionConstruction collision, RpgCollisionDetailsControl this_collision_control, List<BaseCollisionConstruction> opponent_collider)
     {
         if (collision == null) return;
         if (rpg_collision_ == null) return;
         Collider[] colliders = CollisionTypeOverLap();
-        RpgCollisionCalculation.CollisionCorrection(collision,this,opponent_collider, colliders);
+        RpgCollisionCalculation.CollisionCorrection(collision, this_collision_control,this, opponent_collider, colliders);
     }
 
     /// <summary>
@@ -107,15 +107,5 @@ public class RpgCollisionDetails
             colliders = RpgCollisionCalculation.CapsuleCalculation((CapsuleCollider)rpg_collision_);
         }
         return colliders;
-    }
-
-    /// <summary>
-    /// フラグ更新処理
-    /// </summary>
-    /// <param name="hit_flag"></param>
-    public void FlagUpdate(bool hit_flag)
-    {
-        if (hit_flag_collision_ == null) return;
-        hit_flag_collision_.FlagUpdate(hit_flag);
     }
 }

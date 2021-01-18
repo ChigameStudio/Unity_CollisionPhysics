@@ -18,15 +18,7 @@ public class RpgCollisionHitFlag
         get { return hit_enter_; }
     }
 
-    /// <summary>
-    /// ヒットしていない
-    /// </summary>
-    [SerializeField]
-    private bool hit_exit_ = false;
-    public bool HitExit
-    {
-        get { return hit_exit_; }
-    }
+
 
     /// <summary>
     /// ヒットした瞬間
@@ -58,15 +50,26 @@ public class RpgCollisionHitFlag
     /// フラグUpdate
     /// </summary>
     /// <param name="hit_flag">hitしたかどうか</param>
-    public void FlagUpdate(bool hit_flag)
+    public bool FlagUpdate(bool hit_flag)
     {
 
         hit_enter_ = hit_flag;
-        hit_exit_ = !hit_flag;
 
         hit_second_ = (hit_state_ ^ hit_flag) & hit_flag;
         hit_release_ = (hit_state_ ^ hit_flag) & !hit_flag;
 
         hit_state_ = hit_flag;
+
+        return hit_enter_ | hit_second_ | hit_release_;
+    }
+
+
+    /// <summary>
+    /// 当たったかどうか
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckHit()
+    {
+        return hit_enter_ | hit_second_ | hit_release_;
     }
 }

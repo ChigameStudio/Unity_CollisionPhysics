@@ -7,28 +7,6 @@ using UnityEngine;
 /// </summary>
 public static class RpgCollisionDetailsAccessor
 {
-    public static RpgCollisionHitFlag HitFlag(RpgCollisionDetails collision_detailes)
-    {
-        if (collision_detailes == null) return null;
-        return collision_detailes.HitFlagCollision;
-    }
-    public static bool HitEnter(RpgCollisionDetails collision_detailes)
-    {
-        return HitFlag(collision_detailes).HitEnter;
-    }
-    public static bool HitExit(RpgCollisionDetails collision_detailes)
-    {
-        return HitFlag(collision_detailes).HitExit;
-    }
-    public static bool HitSecond(RpgCollisionDetails collision_detailes)
-    {
-        return HitFlag(collision_detailes).HitSecond;
-    }
-    public static bool HitRelease(RpgCollisionDetails collision_detailes)
-    {
-        return HitFlag(collision_detailes).HitRelease;
-    }
-
     public static RpgCollisionPosition CollisionPosition(RpgCollisionDetails collision_detailes)
     {
         if (collision_detailes == null) return null;
@@ -42,6 +20,11 @@ public static class RpgCollisionDetailsAccessor
     {
         return CollisionPosition(collision_detailes).SaveCollisionPosition = set_pos;
     }
+    public static Vector3 SaveCollisionPositionCaculation(RpgCollisionDetails collision_detailes, Vector3 set_pos)
+    {
+        return SaveCollisionPosition(collision_detailes,CollisionPosition(collision_detailes).SaveCollisionPosition + set_pos);
+    }
+
     public static Vector3 OldToNowVector(RpgCollisionDetails collision_detailes)
     {
         return CollisionPosition(collision_detailes).OldToNowVector;
@@ -54,9 +37,14 @@ public static class RpgCollisionDetailsAccessor
     {
         return CollisionPosition(collision_detailes).CalculationPosition = set_pos;
     }
+    public static Vector3 CalculationPositionCaculation(RpgCollisionDetails collision_detailes, Vector3 set_pos)
+    {
+        return CalculationPosition(collision_detailes, CollisionPosition(collision_detailes).CalculationPosition + set_pos);
+    }
     public static Vector3 SaveOldToNowVector(RpgCollisionDetails collision_detailes)
     {
         return CollisionPosition(collision_detailes).SaveOldToNowVector;
     }
+
 
 }
