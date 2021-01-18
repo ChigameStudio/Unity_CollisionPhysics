@@ -24,6 +24,7 @@ public class InputMove : MonoBehaviour
     {
         collision_ = new BaseCollisionConstruction();
         collision_.Init(gameObject, collision_type_, collision_push_type_);
+        collision_.RpgCollisionDetailsControl.HitReleaseFunc = Enter;
     }
 
     // Update is called once per frame
@@ -54,5 +55,10 @@ public class InputMove : MonoBehaviour
         }
         transform.position += move * speed;
        
+    }
+
+    void Enter(Collider col)
+    {
+        Debug.Log(col.gameObject);
     }
 }

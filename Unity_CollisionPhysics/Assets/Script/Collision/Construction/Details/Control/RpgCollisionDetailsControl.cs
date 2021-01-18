@@ -14,9 +14,9 @@ public class RpgCollisionDetailsControl
     public delegate void HitSecond (Collider collider);
     public delegate void HitRelease(Collider collider);
 
-    public HitEnter hit_enter_func_;
-    public HitSecond hit_second_func_;
-    public HitRelease hit_release_func_;
+    private HitEnter hit_enter_func_;
+    private HitSecond hit_second_func_;
+    private HitRelease hit_release_func_;
 
     public HitEnter HitEnterFunc
     {
@@ -25,7 +25,7 @@ public class RpgCollisionDetailsControl
             hit_enter_func_ = value;
         }
     }
-    public HitSecond HitSeconFunc
+    public HitSecond HitSecondFunc
     {
         set
         {
@@ -105,7 +105,9 @@ public class RpgCollisionDetailsControl
         foreach(var flag in list_rpg_collision_hit_)
         {
             flag.FlagUpdate();
+            HitUpdate(flag);
         }
+        
     }
 
     /// <summary>
@@ -275,11 +277,11 @@ public class RpgCollisionDetailsControl
     /// ヒットUpdate
     /// </summary>
     /// <param name="hit"></param>
-    private void HiUpdate(RpgCollisionHit hit)
+    public void HitUpdate(RpgCollisionHit hit)
     {
-        if (hit.GetHitEnter == true) hit_enter_func_(hit.HitCollision);
-        if (hit.GetHitSecond == true) hit_second_func_(hit.HitCollision);
-        if(hit.GetHitRelease == true) hit_release_func_(hit.HitCollision);
+        if (hit.GetHitEnter == true   && hit_enter_func_ != null) hit_enter_func_(hit.HitCollision);
+        if (hit.GetHitSecond == true  && hit_second_func_ != null) hit_second_func_(hit.HitCollision);
+        if (hit.GetHitRelease == true && hit_release_func_ != null) hit_release_func_(hit.HitCollision);
     }
 
     /// <summary>
