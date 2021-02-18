@@ -58,6 +58,8 @@ public class RpgCollisionHitFlag
         hit_second_ = (hit_state_ ^ hit_flag) & hit_flag;
         hit_release_ = (hit_state_ ^ hit_flag) & !hit_flag;
 
+        
+
         hit_state_ = hit_flag;
 
         return hit_enter_ | hit_second_ | hit_release_;

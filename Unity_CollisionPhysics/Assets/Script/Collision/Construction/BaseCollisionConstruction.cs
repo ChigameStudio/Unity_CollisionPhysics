@@ -62,6 +62,17 @@ public class BaseCollisionConstruction
         rpg_collision_details_control_.AutoAddCollisionDetails(this);
     }
 
+    public void Init(GameObject game_object, CollisionLayer layer, CollisionPushType push,int find_layer)
+    {
+        collision_push_type_ = push;
+        collision_type_ = layer;
+        RpgCollisionConnection.AddCollisionConstruction(this);
+        rpg_collision_details_control_ = new RpgCollisionDetailsControl();
+        this_object_ = game_object;
+        rpg_collision_details_control_.Init(this_object_);
+        rpg_collision_details_control_.AutoAddCollisionDetails(this,find_layer);
+    }
+
     public void Update()
     {
         if (rpg_collision_details_control_ == null) return;
@@ -75,5 +86,11 @@ public class BaseCollisionConstruction
     {
         if (rpg_collision_details_control_ == null) return;
         rpg_collision_details_control_.UpdateCollision(this, opponent_collider);
+    }
+
+    public void UpdateCollisionFlag()
+    {
+        if (rpg_collision_details_control_ == null) return;
+        rpg_collision_details_control_.UpdateCollisionFlag();
     }
 }

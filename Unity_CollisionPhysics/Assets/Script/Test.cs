@@ -23,12 +23,18 @@ public class Test : MonoBehaviour
     void Start()
     {
         collision_ = new BaseCollisionConstruction();
-        collision_.Init(gameObject, collision_type_, collision_push_type_);
+        collision_.Init(gameObject, collision_type_, collision_push_type_,LayerMask.NameToLayer("Player"));
+        collision_.RpgCollisionDetailsControl.HitSecondFunc = Enter;
     }
 
     // Update is called once per frame
     void Update()
     {
        transform.position += move * speed;
+    }
+
+    void Enter(Collider col)
+    {
+        Debug.Log(col.gameObject);
     }
 }

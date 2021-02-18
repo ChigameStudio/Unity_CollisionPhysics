@@ -112,15 +112,13 @@ public class RpgCollisionControl : MonoBehaviour
         {
             collision.Update();
         }
-
-        int index = 1;
-        int max_index = list_all_collision_construction_.Count - index;
         foreach (var collision in list_all_collision_construction_)
         {
             collision.UpdateCollision(list_all_collision_construction_);
-            //collision.UpdateCollision(list_all_collision_construction_.GetRange(index,max_index));
-            //index++;
-            //max_index = list_all_collision_construction_.Count - index;
+        }
+        foreach (var collision in list_all_collision_construction_)
+        {
+            collision.UpdateCollisionFlag();
         }
     }
 

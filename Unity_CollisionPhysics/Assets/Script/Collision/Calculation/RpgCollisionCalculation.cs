@@ -16,6 +16,13 @@ public static class RpgCollisionCalculation
     /// </summary>
     private  static int exit_max_count = 100;
 
+    public enum CapsuleDirectionType : int
+    {
+        kAxisY,
+        kAxisX,
+        kAxisZ
+    }
+
     /// <summary>
     /// カプセル内にコリジョンがあるかどうか
     /// </summary>
@@ -27,10 +34,20 @@ public static class RpgCollisionCalculation
         float radius = collider.radius * scale + 0.01f;
         float _height = (((collider.height * collider.transform.localScale.y) / 2.0f) - radius);
 
+        Vector3 up = collider.transform.up;
+        if(collider.direction == (int)CapsuleDirectionType.kAxisX)
+        {
+            up = collider.transform.right;
+        } 
+        else if(collider.direction == (int)CapsuleDirectionType.kAxisZ)
+        {
+            up = collider.transform.forward;
+        }
+
         Vector3 start_pos = Vector3.zero;
-        start_pos = collider.center + collider.transform.position + ((_height * collider.transform.up));
+        start_pos = collider.center + collider.transform.position + ((_height * up));
         Vector3 end_pos = Vector3.zero;
-        end_pos = collider.center + collider.transform.position + ((_height * (collider.transform.up * -1.0f)));
+        end_pos = collider.center + collider.transform.position + ((_height * (up * -1.0f)));
 
         Collider[] colliders = OverlapCapsule(start_pos, end_pos, radius);
         return colliders.Where(col => col != collider).ToArray();
@@ -215,7 +232,7 @@ public static class RpgCollisionCalculation
                                        , opponent_col.RpgCollision, RpgCollisionDetailsAccessor.SaveCollisionPosition(opponent_col)
                                        , ref pushBackVector, ref pushBackDistance))
                 {
-                    if(pushBackDistance >= 0.001f)
+                    if(pushBackDistance >= float.Epsilon)
                     {
                         Vector3 updatedPostion = (pushBackVector) * (pushBackDistance);
                         this_collison.ThisObject.transform.position +=  new Vector3(updatedPostion.x, updatedPostion.y, updatedPostion.z);
@@ -225,6 +242,7 @@ public static class RpgCollisionCalculation
                         opponent_collider[i].RpgCollisionDetailsControl.CollisionHitEnter(collision_details.RpgCollision, collision_details);
                     }
                 }
+
                
                 
             }

@@ -102,12 +102,19 @@ public class RpgCollisionDetailsControl
         {
             details.UpdateCollision(collision_construction, this ,opponent_collider);
         }
-        foreach(var flag in list_rpg_collision_hit_)
+        
+    }
+
+    /// <summary>
+    /// 更新処理(フラグ)
+    /// </summary>
+    public void UpdateCollisionFlag()
+    {
+        foreach (var flag in list_rpg_collision_hit_)
         {
             flag.FlagUpdate();
             HitUpdate(flag);
         }
-        
     }
 
     /// <summary>
@@ -167,7 +174,6 @@ public class RpgCollisionDetailsControl
         if(hit == null)
         {
             hit = AddCollisionHit(collider, opponent_col, true);
-            return true;
         }
 
         hit.FlagHit();
@@ -185,6 +191,27 @@ public class RpgCollisionDetailsControl
         Collider[] colliders = collision_construction.ThisObject.AllComponents<Collider>();
         foreach (var col in colliders)
         {
+            if (SearchCollisionDetails(col) != null) continue;
+            RpgCollisionDetails details = new RpgCollisionDetails();
+            details.Init(collision_construction, col, collision_construction.ThisObject);
+            list_rpg_collision_details_.Add(details);
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// 自動的に追加する(レイヤー指定あり)
+    /// </summary>
+    /// <returns></returns>
+    public bool AutoAddCollisionDetails(BaseCollisionConstruction collision_construction,int layer)
+    {
+        if (list_rpg_collision_details_ == null) list_rpg_collision_details_ = new List<RpgCollisionDetails>();
+
+        Collider[] colliders = collision_construction.ThisObject.AllComponents<Collider>();
+        foreach (var col in colliders)
+        {
+            if (col.gameObject.layer != layer) continue;
             if (SearchCollisionDetails(col) != null) continue;
             RpgCollisionDetails details = new RpgCollisionDetails();
             details.Init(collision_construction, col, collision_construction.ThisObject);
